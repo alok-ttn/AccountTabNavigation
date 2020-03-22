@@ -1,31 +1,302 @@
 import React from 'react';
-import {Text, StyleSheet, SafeAreaView} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 class Account extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      upperList: [
+        {
+          picture: '/Users/alokmishra/Desktop/Asessment/src/assets/track.png',
+          textList: 'Track Order',
+        },
+        {
+          picture:
+            '/Users/alokmishra/Desktop/Asessment/src/assets/sizeChart.png',
+          textList: 'Size Chart',
+        },
+        {
+          picture:
+            '/Users/alokmishra/Desktop/Asessment/src/assets/notification.png',
+          textList: 'Notification',
+        },
+        {
+          picture: '/Users/alokmishra/Desktop/Asessment/src/assets/store.png',
+          textList: 'Store Locator',
+        },
+      ],
+      BottomList: [
+        {
+          Bpicture:
+            '/Users/alokmishra/Desktop/Asessment/src/assets/country.png',
+          BtextList: 'Country',
+          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/flag.png',
+          Bname: 'AED',
+        },
+        {
+          Bpicture:
+            '/Users/alokmishra/Desktop/Asessment/src/assets/language.png',
+          BtextList: 'Language',
+          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bname: 'ENG',
+        },
+        {
+          Bpicture: '/Users/alokmishra/Desktop/Asessment/src/assets/about.png',
+          BtextList: 'About',
+          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bname: '',
+        },
+        {
+          Bpicture: '/Users/alokmishra/Desktop/Asessment/src/assets/faq.png',
+          BtextList: 'FAQ',
+          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bname: '',
+        },
+        {
+          Bpicture:
+            '/Users/alokmishra/Desktop/Asessment/src/assets/shipping.png',
+          BtextList: 'Shipping & Returns',
+          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bname: '',
+        },
+      ],
+    };
   }
+  renderSeparator = () => {
+    return <View style={styles.seperator} />;
+  };
 
   render() {
+    const {upperList, BottomList} = this.state;
     return (
       <SafeAreaView style={styles.container}>
-        <Text> Account </Text>
+        <View style={styles.viewTitle}>
+          <View style={styles.TitleInner}>
+            <View style={styles.welcomText}>
+              <Text style={styles.TextWelcomeStyling}>Welcome!</Text>
+            </View>
+            <View style={styles.TitleInnerLower}>
+              <View style={styles.signupView}>
+                <TouchableOpacity>
+                  <Text style={styles.signupText}>SIGN IN</Text>
+                </TouchableOpacity>
+                <Text
+                  style={
+                    (styles.signupText, {fontWeight: 'bold', fontSize: 20})
+                  }>
+                  |
+                </Text>
+                <TouchableOpacity>
+                  <Text style={(styles.signupText, {marginLeft: 10})}>
+                    JOIN
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          <View style={styles.TitleImage}>
+            <Image
+              style={styles.imageStyle}
+              source={require('../assets/titleImage.png')}
+            />
+          </View>
+        </View>
+
+        <View style={styles.viewStrip} />
+
+        {/* here starts the middle component having a flatlist */}
+        <View style={styles.viewMiddle}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            scrollEnabled={false}
+            data={upperList}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity activeOpacity={0.5}>
+                  <View style={styles.FlatListView}>
+                    <View style={styles.FlatListView}>
+                      <Image
+                        source={{uri: item.picture}}
+                        style={styles.FlatIcons}
+                      />
+                      <Text style={styles.FlatText}>{item.textList}</Text>
+                    </View>
+                    <Image
+                      source={require('../assets/arrow.png')}
+                      style={styles.arrowStyle}
+                    />
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={item => item.textList}
+            ItemSeparatorComponent={this.renderSeparator}
+          />
+        </View>
+
+        <View style={styles.viewStrip} />
+
+        <View style={styles.viewBottom}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            scrollEnabled={false}
+            data={BottomList}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity activeOpacity={0.5}>
+                  <View style={styles.BottomFlatListView}>
+                    <View style={styles.FlatListView}>
+                      <Image
+                        source={{uri: item.Bpicture}}
+                        style={styles.FlatIcons}
+                      />
+                      <Text style={styles.FlatText}>{item.BtextList}</Text>
+                    </View>
+                    <View style={styles.FlatListView}>
+                      <Image
+                        source={{uri: item.Bflag}}
+                        style={styles.FlatIcons}
+                      />
+                      <Text
+                        style={
+                          (styles.FlatText,
+                          {marginRight: 20, fontWeight: '500', fontSize: 18})
+                        }>
+                        {item.Bname}
+                      </Text>
+                      <Image
+                        source={require('../assets/arrow.png')}
+                        style={styles.arrowStyle}
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={item => item.BtextList}
+            ItemSeparatorComponent={this.renderSeparator}
+          />
+        </View>
       </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#E3DFDE',
-    flex: 1,
+  TitleInner: {
+    flex: 0.5,
+    backgroundColor: '#fff',
+  },
+  signupView: {
+    flexDirection: 'row',
+    backgroundColor: '#FEFCEE',
+    height: 30,
+    width: 130,
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 5,
+    marginTop: 10,
+  },
+  TextWelcomeStyling: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  TitleInnerLower: {
+    flex: 0.5,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    marginTop: 10,
+    marginLeft: 5,
+  },
+  FlatListView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 65,
+  },
+  BottomFlatListView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 67,
+  },
+  signupText: {
+    fontSize: 15,
+    marginRight: 10,
+  },
+  welcomText: {
+    flex: 0.5,
+    backgroundColor: '#fff',
+    justifyContent: 'flex-end',
+  },
+  TitleImage: {
+    flex: 0.5,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+  },
+  container: {
+    backgroundColor: '#fff',
+    flex: 1,
   },
   textEdit: {
     fontSize: 25,
     paddingTop: 50,
     paddingLeft: 20,
     color: '#fff',
+  },
+  viewTitle: {
+    backgroundColor: 'red',
+    flex: 0.2,
+    flexDirection: 'row',
+    marginLeft: 20,
+    marginRight: 10,
+  },
+  viewMiddle: {
+    backgroundColor: '#fff',
+    flex: 0.4,
+    marginLeft: 20,
+    marginRight: 10,
+  },
+  FlatIcons: {
+    height: 30,
+    width: 30,
+    marginRight: 30,
+  },
+  arrowStyle: {
+    height: 20,
+    width: 20,
+  },
+  FlatText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  viewBottom: {
+    backgroundColor: '#fff',
+    flex: 0.5,
+    marginLeft: 20,
+    marginRight: 10,
+  },
+  viewStrip: {
+    backgroundColor: '#F2F2F2',
+    flex: 0.02,
+  },
+  imageStyle: {
+    width: 100,
+    height: 100,
+    alignSelf: 'flex-end',
+    marginRight: 10,
+  },
+  seperator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CED0CE',
   },
 });
 
