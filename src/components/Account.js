@@ -31,8 +31,9 @@ class Account extends React.Component {
           picture: '/Users/alokmishra/Desktop/Asessment/src/assets/store.png',
           textList: 'Store Locator',
         },
-      ],
-      BottomList: [
+        {
+          insertview: '',
+        },
         {
           Bpicture:
             '/Users/alokmishra/Desktop/Asessment/src/assets/country.png',
@@ -74,7 +75,7 @@ class Account extends React.Component {
   };
 
   render() {
-    const {upperList, BottomList} = this.state;
+    const {upperList} = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewTitle}>
@@ -111,63 +112,58 @@ class Account extends React.Component {
             scrollEnabled={false}
             data={upperList}
             renderItem={({item}) => {
-              return (
-                <TouchableOpacity activeOpacity={0.5}>
-                  <View style={styles.FlatListView}>
+              if ('picture' in item) {
+                return (
+                  <TouchableOpacity activeOpacity={0.5}>
                     <View style={styles.FlatListView}>
-                      <Image
-                        source={{uri: item.picture}}
-                        style={styles.FlatIcons}
-                      />
-                      <Text style={styles.FlatText}>{item.textList}</Text>
-                    </View>
-                    <Image
-                      source={require('../assets/arrow.png')}
-                      style={styles.arrowStyle}
-                    />
-                  </View>
-                </TouchableOpacity>
-              );
-            }}
-            keyExtractor={item => item.textList}
-            ItemSeparatorComponent={this.renderSeparator}
-          />
-        </View>
-
-        <View style={styles.viewStrip} />
-
-        <View style={styles.viewBottom}>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            scrollEnabled={false}
-            data={BottomList}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity activeOpacity={0.5}>
-                  <View style={styles.BottomFlatListView}>
-                    <View style={styles.FlatListView}>
-                      <Image
-                        source={{uri: item.Bpicture}}
-                        style={styles.FlatIcons}
-                      />
-                      <Text style={styles.FlatText}>{item.BtextList}</Text>
-                    </View>
-                    <View style={styles.FlatListView}>
-                      <Image
-                        source={{uri: item.Bflag}}
-                        style={styles.FlatIcons}
-                      />
-                      <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
+                      <View style={styles.FlatListView}>
+                        <Image
+                          source={{uri: item.picture}}
+                          style={styles.FlatIcons}
+                        />
+                        <Text style={styles.FlatText}>{item.textList}</Text>
+                      </View>
                       <Image
                         source={require('../assets/arrow.png')}
                         style={styles.arrowStyle}
                       />
                     </View>
+                  </TouchableOpacity>
+                );
+              } else if ('insertview' in item) {
+                return (
+                  <View style={styles.viewStrip}>
+                    <View style={styles.BottomFlatListSeparator} />
                   </View>
-                </TouchableOpacity>
-              );
+                );
+              } else if ('Bpicture' in item) {
+                return (
+                  <TouchableOpacity activeOpacity={0.5}>
+                    <View style={styles.BottomFlatListView}>
+                      <View style={styles.FlatListView}>
+                        <Image
+                          source={{uri: item.Bpicture}}
+                          style={styles.FlatIcons}
+                        />
+                        <Text style={styles.FlatText}>{item.BtextList}</Text>
+                      </View>
+                      <View style={styles.FlatListView}>
+                        <Image
+                          source={{uri: item.Bflag}}
+                          style={styles.FlatIcons}
+                        />
+                        <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
+                        <Image
+                          source={require('../assets/arrow.png')}
+                          style={styles.arrowStyle}
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }
             }}
-            keyExtractor={item => item.BtextList}
+            keyExtractor={item => item.textList}
             ItemSeparatorComponent={this.renderSeparator}
           />
         </View>
@@ -214,6 +210,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 67,
   },
+  BottomFlatListSeparator: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 12,
+    marginLeft: -15,
+  },
   signupText: {
     fontSize: 15,
     marginRight: 15,
@@ -257,9 +260,7 @@ const styles = StyleSheet.create({
   },
   viewMiddle: {
     backgroundColor: '#fff',
-    flex: 0.4,
-    marginLeft: 20,
-    marginRight: 10,
+    flex: 1,
   },
   FlatIcons: {
     height: 30,
@@ -286,7 +287,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   viewStrip: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#f2f2f2',
+    // f2f2f2
     flex: 0.02,
   },
   imageStyle: {
