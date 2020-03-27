@@ -87,16 +87,9 @@ class Account extends React.Component {
                 <TouchableOpacity>
                   <Text style={styles.signupText}>SIGN IN</Text>
                 </TouchableOpacity>
-                <Text
-                  style={
-                    (styles.signupText, {fontWeight: 'bold', fontSize: 20})
-                  }>
-                  |
-                </Text>
+                <Text style={styles.signupTextSeperator}>|</Text>
                 <TouchableOpacity>
-                  <Text style={(styles.signupText, {marginLeft: 10})}>
-                    JOIN
-                  </Text>
+                  <Text style={styles.signupTextJoin}>JOIN</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -164,13 +157,7 @@ class Account extends React.Component {
                         source={{uri: item.Bflag}}
                         style={styles.FlatIcons}
                       />
-                      <Text
-                        style={
-                          (styles.FlatText,
-                          {marginRight: 20, fontWeight: '500', fontSize: 18})
-                        }>
-                        {item.Bname}
-                      </Text>
+                      <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
                       <Image
                         source={require('../assets/arrow.png')}
                         style={styles.arrowStyle}
@@ -229,12 +216,22 @@ const styles = StyleSheet.create({
   },
   signupText: {
     fontSize: 15,
-    marginRight: 10,
+    marginRight: 15,
   },
   welcomText: {
     flex: 0.5,
     backgroundColor: '#fff',
     justifyContent: 'flex-end',
+  },
+  signupTextSeperator: {
+    fontSize: 20,
+    marginRight: 8,
+    fontWeight: 'bold',
+  },
+  signupTextJoin: {
+    marginLeft: 6,
+    fontSize: 15,
+    marginRight: 10,
   },
   TitleImage: {
     flex: 0.5,
@@ -276,6 +273,11 @@ const styles = StyleSheet.create({
   FlatText: {
     fontSize: 15,
     fontWeight: 'bold',
+  },
+  FlatTextAgain: {
+    marginRight: 20,
+    fontWeight: '500',
+    fontSize: 18,
   },
   viewBottom: {
     backgroundColor: '#fff',
