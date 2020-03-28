@@ -74,6 +74,50 @@ class Account extends React.Component {
     return <View style={styles.seperator} />;
   };
 
+  renderItem = ({item}) => {
+    if ('picture' in item) {
+      return (
+        <TouchableOpacity activeOpacity={0.5}>
+          <View style={styles.FlatListView}>
+            <View style={styles.FlatListView}>
+              <Image source={{uri: item.picture}} style={styles.FlatIcons} />
+              <Text style={styles.FlatText}>{item.textList}</Text>
+            </View>
+            <Image
+              source={require('../assets/arrow.png')}
+              style={styles.arrowStyle}
+            />
+          </View>
+        </TouchableOpacity>
+      );
+    } else if ('insertview' in item) {
+      return (
+        <View style={styles.viewStrip}>
+          <View style={styles.BottomFlatListSeparator} />
+        </View>
+      );
+    } else if ('Bpicture' in item) {
+      return (
+        <TouchableOpacity activeOpacity={0.5}>
+          <View style={styles.BottomFlatListView}>
+            <View style={styles.FlatListView}>
+              <Image source={{uri: item.Bpicture}} style={styles.FlatIcons} />
+              <Text style={styles.FlatText}>{item.BtextList}</Text>
+            </View>
+            <View style={styles.FlatListView}>
+              <Image source={{uri: item.Bflag}} style={styles.FlatIcons} />
+              <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
+              <Image
+                source={require('../assets/arrow.png')}
+                style={styles.arrowStyle}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+  };
+
   render() {
     const {upperList} = this.state;
     return (
@@ -111,58 +155,7 @@ class Account extends React.Component {
             showsHorizontalScrollIndicator={false}
             scrollEnabled={false}
             data={upperList}
-            renderItem={({item}) => {
-              if ('picture' in item) {
-                return (
-                  <TouchableOpacity activeOpacity={0.5}>
-                    <View style={styles.FlatListView}>
-                      <View style={styles.FlatListView}>
-                        <Image
-                          source={{uri: item.picture}}
-                          style={styles.FlatIcons}
-                        />
-                        <Text style={styles.FlatText}>{item.textList}</Text>
-                      </View>
-                      <Image
-                        source={require('../assets/arrow.png')}
-                        style={styles.arrowStyle}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                );
-              } else if ('insertview' in item) {
-                return (
-                  <View style={styles.viewStrip}>
-                    <View style={styles.BottomFlatListSeparator} />
-                  </View>
-                );
-              } else if ('Bpicture' in item) {
-                return (
-                  <TouchableOpacity activeOpacity={0.5}>
-                    <View style={styles.BottomFlatListView}>
-                      <View style={styles.FlatListView}>
-                        <Image
-                          source={{uri: item.Bpicture}}
-                          style={styles.FlatIcons}
-                        />
-                        <Text style={styles.FlatText}>{item.BtextList}</Text>
-                      </View>
-                      <View style={styles.FlatListView}>
-                        <Image
-                          source={{uri: item.Bflag}}
-                          style={styles.FlatIcons}
-                        />
-                        <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
-                        <Image
-                          source={require('../assets/arrow.png')}
-                          style={styles.arrowStyle}
-                        />
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }
-            }}
+            renderItem={this.renderItem}
             keyExtractor={item => item.textList}
             ItemSeparatorComponent={this.renderSeparator}
           />
