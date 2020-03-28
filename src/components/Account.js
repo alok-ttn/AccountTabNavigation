@@ -16,16 +16,19 @@ class Account extends React.Component {
         {
           picture: '/Users/alokmishra/Desktop/Asessment/src/assets/track.png',
           textList: 'Track Order',
+          seperate: '1',
         },
         {
           picture:
             '/Users/alokmishra/Desktop/Asessment/src/assets/sizeChart.png',
           textList: 'Size Chart',
+          seperate: '1',
         },
         {
           picture:
             '/Users/alokmishra/Desktop/Asessment/src/assets/notification.png',
           textList: 'Notification',
+          seperate: '1',
         },
         {
           picture: '/Users/alokmishra/Desktop/Asessment/src/assets/store.png',
@@ -40,6 +43,7 @@ class Account extends React.Component {
           BtextList: 'Country',
           Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/flag.png',
           Bname: 'AED',
+          seperate: '1',
         },
         {
           Bpicture:
@@ -47,18 +51,21 @@ class Account extends React.Component {
           BtextList: 'Language',
           Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
           Bname: 'ENG',
+          seperate: '1',
         },
         {
           Bpicture: '/Users/alokmishra/Desktop/Asessment/src/assets/about.png',
           BtextList: 'About',
           Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
           Bname: '',
+          seperate: '1',
         },
         {
           Bpicture: '/Users/alokmishra/Desktop/Asessment/src/assets/faq.png',
           BtextList: 'FAQ',
           Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
           Bname: '',
+          seperate: '1',
         },
         {
           Bpicture:
@@ -75,7 +82,23 @@ class Account extends React.Component {
   };
 
   renderItem = ({item}) => {
-    if ('picture' in item) {
+    if ('picture' in item && 'seperate' in item) {
+      return (
+        <TouchableOpacity activeOpacity={0.5}>
+          <View style={styles.FlatListView}>
+            <View style={styles.FlatListView}>
+              <Image source={{uri: item.picture}} style={styles.FlatIcons} />
+              <Text style={styles.FlatText}>{item.textList}</Text>
+            </View>
+            <Image
+              source={require('../assets/arrow.png')}
+              style={styles.arrowStyle}
+            />
+          </View>
+          <View>{this.renderSeparator()}</View>
+        </TouchableOpacity>
+      );
+    } else if ('picture' in item && !('seperate' in item)) {
       return (
         <TouchableOpacity activeOpacity={0.5}>
           <View style={styles.FlatListView}>
@@ -96,7 +119,27 @@ class Account extends React.Component {
           <View style={styles.BottomFlatListSeparator} />
         </View>
       );
-    } else if ('Bpicture' in item) {
+    } else if ('Bpicture' in item && 'seperate' in item) {
+      return (
+        <TouchableOpacity activeOpacity={0.5}>
+          <View style={styles.BottomFlatListView}>
+            <View style={styles.FlatListView}>
+              <Image source={{uri: item.Bpicture}} style={styles.FlatIcons} />
+              <Text style={styles.FlatText}>{item.BtextList}</Text>
+            </View>
+            <View style={styles.FlatListView}>
+              <Image source={{uri: item.Bflag}} style={styles.FlatIcons} />
+              <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
+              <Image
+                source={require('../assets/arrow.png')}
+                style={styles.arrowStyle}
+              />
+            </View>
+          </View>
+          <View>{this.renderSeparator()}</View>
+        </TouchableOpacity>
+      );
+    } else if ('Bpicture' in item && !('seperate' in item)) {
       return (
         <TouchableOpacity activeOpacity={0.5}>
           <View style={styles.BottomFlatListView}>
@@ -157,7 +200,6 @@ class Account extends React.Component {
             data={upperList}
             renderItem={this.renderItem}
             keyExtractor={item => item.textList}
-            ItemSeparatorComponent={this.renderSeparator}
           />
         </View>
       </SafeAreaView>
@@ -195,13 +237,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 65,
+    height: 68,
   },
   BottomFlatListView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 67,
+    height: 68,
   },
   BottomFlatListSeparator: {
     flexDirection: 'row',
@@ -259,10 +301,12 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 30,
+    marginLeft: 20,
   },
   arrowStyle: {
     height: 20,
     width: 20,
+    marginRight: 15,
   },
   FlatText: {
     fontSize: 15,
