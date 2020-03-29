@@ -14,64 +14,59 @@ class Account extends React.Component {
     this.state = {
       upperList: [
         {
-          picture: '/Users/alokmishra/Desktop/Asessment/src/assets/track.png',
+          picture: require('../assets/track.png'),
           textList: 'Track Order',
           seperate: '1',
         },
         {
-          picture:
-            '/Users/alokmishra/Desktop/Asessment/src/assets/sizeChart.png',
+          picture: require('../assets/sizeChart.png'),
           textList: 'Size Chart',
           seperate: '1',
         },
         {
-          picture:
-            '/Users/alokmishra/Desktop/Asessment/src/assets/notification.png',
+          picture: require('../assets/notification.png'),
           textList: 'Notification',
           seperate: '1',
         },
         {
-          picture: '/Users/alokmishra/Desktop/Asessment/src/assets/store.png',
+          picture: require('../assets/store.png'),
           textList: 'Store Locator',
         },
         {
           insertview: '',
         },
         {
-          Bpicture:
-            '/Users/alokmishra/Desktop/Asessment/src/assets/country.png',
+          Bpicture: require('../assets/country.png'),
           BtextList: 'Country',
-          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/flag.png',
+          Bflag: require('../assets/flag.png'),
           Bname: 'AED',
           seperate: '1',
         },
         {
-          Bpicture:
-            '/Users/alokmishra/Desktop/Asessment/src/assets/language.png',
+          Bpicture: require('../assets/language.png'),
           BtextList: 'Language',
-          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bflag: require('../assets/blank.png'),
           Bname: 'ENG',
           seperate: '1',
         },
         {
-          Bpicture: '/Users/alokmishra/Desktop/Asessment/src/assets/about.png',
+          Bpicture: require('../assets/about.png'),
           BtextList: 'About',
-          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bflag: require('../assets/blank.png'),
           Bname: '',
           seperate: '1',
         },
         {
-          Bpicture: '/Users/alokmishra/Desktop/Asessment/src/assets/faq.png',
+          Bpicture: require('../assets/faq.png'),
           BtextList: 'FAQ',
-          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bflag: require('../assets/blank.png'),
           Bname: '',
           seperate: '1',
         },
         {
-          Bpicture:
-            '/Users/alokmishra/Desktop/Asessment/src/assets/shipping.png',
+          Bpicture: require('../assets/shipping.png'),
           BtextList: 'Shipping & Returns',
-          Bflag: '/Users/alokmishra/Desktop/Asessment/src/assets/blank.png',
+          Bflag: require('../assets/blank.png'),
           Bname: '',
         },
       ],
@@ -87,7 +82,7 @@ class Account extends React.Component {
         <TouchableOpacity activeOpacity={0.5}>
           <View style={styles.FlatListView}>
             <View style={styles.FlatListView}>
-              <Image source={{uri: item.picture}} style={styles.FlatIcons} />
+              <Image source={item.picture} style={styles.FlatIcons} />
               <Text style={styles.FlatText}>{item.textList}</Text>
             </View>
             <Image
@@ -103,7 +98,7 @@ class Account extends React.Component {
         <TouchableOpacity activeOpacity={0.5}>
           <View style={styles.FlatListView}>
             <View style={styles.FlatListView}>
-              <Image source={{uri: item.picture}} style={styles.FlatIcons} />
+              <Image source={item.picture} style={styles.FlatIcons} />
               <Text style={styles.FlatText}>{item.textList}</Text>
             </View>
             <Image
@@ -124,11 +119,11 @@ class Account extends React.Component {
         <TouchableOpacity activeOpacity={0.5}>
           <View style={styles.BottomFlatListView}>
             <View style={styles.FlatListView}>
-              <Image source={{uri: item.Bpicture}} style={styles.FlatIcons} />
+              <Image source={item.Bpicture} style={styles.FlatIcons} />
               <Text style={styles.FlatText}>{item.BtextList}</Text>
             </View>
             <View style={styles.FlatListView}>
-              <Image source={{uri: item.Bflag}} style={styles.FlatIcons} />
+              <Image source={item.Bflag} style={styles.FlatIcons} />
               <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
               <Image
                 source={require('../assets/arrow.png')}
@@ -144,11 +139,11 @@ class Account extends React.Component {
         <TouchableOpacity activeOpacity={0.5}>
           <View style={styles.BottomFlatListView}>
             <View style={styles.FlatListView}>
-              <Image source={{uri: item.Bpicture}} style={styles.FlatIcons} />
+              <Image source={item.Bpicture} style={styles.FlatIcons} />
               <Text style={styles.FlatText}>{item.BtextList}</Text>
             </View>
             <View style={styles.FlatListView}>
-              <Image source={{uri: item.Bflag}} style={styles.FlatIcons} />
+              <Image source={item.Bflag} style={styles.FlatIcons} />
               <Text style={styles.FlatTextAgain}>{item.Bname}</Text>
               <Image
                 source={require('../assets/arrow.png')}
