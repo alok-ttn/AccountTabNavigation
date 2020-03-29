@@ -201,7 +201,7 @@ class MyCart extends React.Component {
         <View style={styles.MainView}>
           <FlatList
             showsHorizontalScrollIndicator={false}
-            scrollEnabled={true}
+            scrollEnabled={false}
             data={itemList}
             renderItem={this.renderItem}
             keyExtractor={item => item.textList}
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-  servicesDescription:{
+  servicesDescription: {
     textAlign: 'center',
     fontSize: 11,
     fontWeight: '300',
