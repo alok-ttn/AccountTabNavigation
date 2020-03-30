@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-  servicesDescription:{
+  servicesDescription: {
     textAlign: 'center',
     fontSize: 11,
     fontWeight: '300',
