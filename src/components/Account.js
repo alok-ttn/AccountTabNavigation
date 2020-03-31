@@ -5,13 +5,38 @@ import {
   SafeAreaView,
   View,
   Image,
-  TouchableOpacity,
   FlatList,
 } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
 class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      titleImagepath: require('../assets/titleImage.png'),
+      imagesGallery: [
+        {
+          picture: require('../assets/track.png'),
+          textList: 'Track Order',
+        },
+        {
+          picture: require('../assets/sizeChart.png'),
+          textList: 'Size Chart',
+        },
+        {
+          picture: require('../assets/notification.png'),
+          textList: 'Notification',
+        },
+        {
+          picture: require('../assets/store.png'),
+          textList: 'Store Locator',
+        },
+        {
+          picture: require('../assets/country.png'),
+          textList: 'Country',
+        },
+      ],
+      isModalVisible: false,
       upperList: [
         {
           picture: require('../assets/track.png'),
@@ -72,10 +97,13 @@ class Account extends React.Component {
       ],
     };
   }
+
+  toggleModal = () => {
+    this.setState({isModalVisible: !this.state.isModalVisible});
+  };
   renderSeparator = () => {
     return <View style={styles.seperator} />;
   };
-
   renderItem = ({item}) => {
     if ('picture' in item && 'seperate' in item) {
       return (
@@ -157,7 +185,8 @@ class Account extends React.Component {
   };
 
   render() {
-    const {upperList} = this.state;
+    const {upperList, imagesGallery, titleImagepath} = this.state;
+    var imageXml = <Image style={styles.imageStyle} source={titleImagepath} />;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewTitle}>
@@ -178,10 +207,12 @@ class Account extends React.Component {
             </View>
           </View>
           <View style={styles.TitleImage}>
-            <Image
-              style={styles.imageStyle}
-              source={require('../assets/titleImage.png')}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                this.toggleModal(!this.state.modalVisible);
+              }}>
+              {imageXml}
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -197,6 +228,43 @@ class Account extends React.Component {
             keyExtractor={item => item.textList}
           />
         </View>
+        <Modal
+          visible={this.state.isModalVisible}
+          animationIn="slideInDown"
+          animationInTiming={500}
+          hasBackdrop={true}
+          onBackdropPress={this.toggleModal}>
+          <View style={styles.ModalMainVIew}>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              scrollEnabled={true}
+              data={imagesGallery}
+              renderItem={({item}) => {
+                return (
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => {
+                      this.setState({titleImagepath: item.picture});
+                    }}>
+                    <View style={styles.ModalFlatItemsVIew}>
+                      <View style={styles.ModalFlatInnerItemsView}>
+                        <Image
+                          source={item.picture}
+                          style={styles.ModalImagesView}
+                        />
+                        <Text style={styles.ModalTextView}>
+                          {item.textList}
+                        </Text>
+                      </View>
+                    </View>
+                    <View>{this.renderSeparator()}</View>
+                  </TouchableOpacity>
+                );
+              }}
+              keyExtractor={item => item.textList}
+            />
+          </View>
+        </Modal>
       </SafeAreaView>
     );
   }
@@ -206,6 +274,27 @@ const styles = StyleSheet.create({
   TitleInner: {
     flex: 0.5,
     backgroundColor: '#fff',
+  },
+  ModalTextView: {
+    marginLeft: 30,
+    fontSize: 20,
+    fontWeight: '600',
+    justifyContent: 'center',
+  },
+  ModalImagesView: {height: 40, width: 40},
+  ModalFlatInnerItemsView: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  ModalFlatItemsVIew: {
+    height: 70,
+    width: '100%',
+    justifyContent: 'center',
+  },
+  ModalMainVIew: {
+    flex: 0.7,
+    backgroundColor: '#f00',
+    marginTop: 50,
   },
   signupView: {
     flexDirection: 'row',
@@ -268,7 +357,7 @@ const styles = StyleSheet.create({
   },
   TitleImage: {
     flex: 0.5,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     justifyContent: 'center',
   },
   container: {
@@ -320,12 +409,12 @@ const styles = StyleSheet.create({
   },
   viewStrip: {
     backgroundColor: '#f2f2f2',
-    // f2f2f2
     flex: 0.02,
   },
   imageStyle: {
     width: 100,
     height: 100,
+    borderRadius: 50,
     alignSelf: 'flex-end',
     marginRight: 10,
   },

@@ -201,7 +201,7 @@ class MyCart extends React.Component {
         <View style={styles.MainView}>
           <FlatList
             showsHorizontalScrollIndicator={false}
-            scrollEnabled={true}
+            scrollEnabled={false}
             data={itemList}
             renderItem={this.renderItem}
             keyExtractor={item => item.textList}

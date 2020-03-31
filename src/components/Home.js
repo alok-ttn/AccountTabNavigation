@@ -1,14 +1,50 @@
 import React from 'react';
-import {Text, StyleSheet, SafeAreaView} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableHighlight,
+  Modal,
+} from 'react-native';
 class Home extends React.Component {
   constructor(props) {
     super(props);
   }
-
+  state = {
+    modalVisible: false,
+  };
+  toggleModal(visible) {
+    this.setState({modalVisible: visible});
+  }
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Text> Home </Text>
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            console.log('Modal has been closed.');
+          }}>
+          <View style={styles.modal}>
+            <Text style={styles.text}>Modal is open!</Text>
+
+            <TouchableHighlight
+              onPress={() => {
+                this.toggleModal(!this.state.modalVisible);
+              }}>
+              <Text style={styles.text}>Close Modal</Text>
+            </TouchableHighlight>
+          </View>
+        </Modal>
+
+        <TouchableHighlight
+          onPress={() => {
+            this.toggleModal(true);
+          }}>
+          <Text style={styles.text}>Open Modal</Text>
+        </TouchableHighlight>
       </SafeAreaView>
     );
   }
@@ -16,16 +52,19 @@ class Home extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#E3DFDE',
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ede3f2',
+    padding: 100,
   },
-  textEdit: {
-    fontSize: 25,
-    paddingTop: 50,
-    paddingLeft: 20,
-    color: '#fff',
+  modal: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#f7021a',
+    padding: 100,
+  },
+  text: {
+    color: '#3f2949',
+    marginTop: 10,
   },
 });
 
