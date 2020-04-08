@@ -4,9 +4,11 @@ import {
   StyleSheet,
   SafeAreaView,
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   Modal,
 } from 'react-native';
+import {RNCamera} from 'react-native-camera';
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -14,57 +16,46 @@ class Home extends React.Component {
   state = {
     modalVisible: false,
   };
-  toggleModal(visible) {
-    this.setState({modalVisible: visible});
-  }
+  takePicture = async () => {
+    if (this.camera) {
+      const options = {quality: 0.5, base64: true};
+      const data = await this.camera.takePictureAsync(options);
+      console.log(data.uri);
+    }
+  };
+
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <Modal
-          animationType={'slide'}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            console.log('Modal has been closed.');
-          }}>
-          <View style={styles.modal}>
-            <Text style={styles.text}>Modal is open!</Text>
-
-            <TouchableHighlight
-              onPress={() => {
-                this.toggleModal(!this.state.modalVisible);
-              }}>
-              <Text style={styles.text}>Close Modal</Text>
-            </TouchableHighlight>
-          </View>
-        </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            this.toggleModal(true);
-          }}>
-          <Text style={styles.text}>Open Modal</Text>
-        </TouchableHighlight>
-      </SafeAreaView>
+      <View style={styles.container}>
+        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
+          <TouchableOpacity style={styles.capture}>
+            <Text style={{fontSize: 14}}> SNAP </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    backgroundColor: '#ede3f2',
-    padding: 100,
-  },
-  modal: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#f7021a',
-    padding: 100,
+    flexDirection: 'column',
+    backgroundColor: 'white',
   },
-  text: {
-    color: '#3f2949',
-    marginTop: 10,
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20,
   },
 });
 

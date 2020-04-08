@@ -5,15 +5,18 @@ import {
   SafeAreaView,
   View,
   Image,
+  Alert,
   FlatList,
 } from 'react-native';
+import {RNCamera} from 'react-native-camera';
+import ImagePicker from 'react-native-image-picker';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      titleImagepath: require('../assets/titleImage.png'),
+      titleImagepath: require('../assets/accountTitle.png'),
       imagesGallery: [
         {
           picture: require('../assets/track.png'),
@@ -34,6 +37,34 @@ class Account extends React.Component {
         {
           picture: require('../assets/country.png'),
           textList: 'Country',
+        },
+        {
+          picture: require('../assets/heart.png'),
+          textList: 'Favorite',
+        },
+        {
+          picture: require('../assets/list.png'),
+          textList: 'Item List',
+        },
+        {
+          picture: require('../assets/flag.png'),
+          textList: 'Country Flag',
+        },
+        {
+          picture: require('../assets/cart.png'),
+          textList: 'Cart',
+        },
+        {
+          picture: require('../assets/shipping.png'),
+          textList: 'Shipping',
+        },
+        {
+          picture: require('../assets/cash.png'),
+          textList: 'Mode of payment',
+        },
+        {
+          picture: require('../assets/bag.png'),
+          textList: 'Bag',
         },
       ],
       isModalVisible: false,
@@ -97,7 +128,40 @@ class Account extends React.Component {
       ],
     };
   }
+  selectFile = () => {
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        {
+          name: 'customOptionKey',
+          title: 'Choose file from Custom Option',
+        },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
 
+    ImagePicker.showImagePicker(options, res => {
+      console.log('Response = ', res);
+
+      if (res.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (res.error) {
+        console.log('ImagePicker Error: ', res.error);
+      } else if (res.customButton) {
+        console.log('User tapped custom button: ', res.customButton);
+        alert(res.customButton);
+      } else {
+        var source = res;
+        this.setState({
+          titleImagepath: source,
+        });
+        console.warn(this.state.titleImagepath);
+      }
+    });
+  };
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
@@ -186,7 +250,8 @@ class Account extends React.Component {
 
   render() {
     const {upperList, imagesGallery, titleImagepath} = this.state;
-    var imageXml = <Image style={styles.imageStyle} source={titleImagepath} />;
+    const {source} = this.selectFile;
+    let imageXml = <Image style={styles.imageStyle} source={titleImagepath} />;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewTitle}>
@@ -209,9 +274,9 @@ class Account extends React.Component {
           <View style={styles.TitleImage}>
             <TouchableOpacity
               onPress={() => {
-                this.toggleModal(!this.state.modalVisible);
+                this.selectFile();
               }}>
-              {imageXml}
+              <View style={styles.TitleImageRoundView}>{imageXml}</View>
             </TouchableOpacity>
           </View>
         </View>
@@ -229,14 +294,15 @@ class Account extends React.Component {
           />
         </View>
         <Modal
-          visible={this.state.isModalVisible}
-          animationIn="slideInDown"
-          animationInTiming={500}
+          animationType="slide"
+          animationInTiming={1000}
           hasBackdrop={true}
+          visible={this.state.isModalVisible}
           onBackdropPress={this.toggleModal}>
           <View style={styles.ModalMainVIew}>
             <FlatList
               showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
               scrollEnabled={true}
               data={imagesGallery}
               renderItem={({item}) => {
@@ -244,7 +310,7 @@ class Account extends React.Component {
                   <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
-                      this.setState({titleImagepath: item.picture});
+                      this.setState({titleImagepath: this.selectFile(source)});
                     }}>
                     <View style={styles.ModalFlatItemsVIew}>
                       <View style={styles.ModalFlatInnerItemsView}>
@@ -275,6 +341,19 @@ const styles = StyleSheet.create({
     flex: 0.5,
     backgroundColor: '#fff',
   },
+  TitleImageRoundView: {
+    height: 100,
+    width: 100,
+    backgroundColor: '#fefce8',
+    padding: 10,
+    alignSelf: 'flex-end',
+    marginRight: 8,
+    alignItems: 'center',
+    borderRadius: 75,
+    borderWidth: 0.75,
+    borderColor: 'orange',
+    justifyContent: 'center',
+  },
   ModalTextView: {
     marginLeft: 30,
     fontSize: 20,
@@ -293,7 +372,7 @@ const styles = StyleSheet.create({
   },
   ModalMainVIew: {
     flex: 0.7,
-    backgroundColor: '#f00',
+    backgroundColor: '#f2f2f2',
     marginTop: 50,
   },
   signupView: {
@@ -371,7 +450,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   viewTitle: {
-    backgroundColor: 'red',
+    backgroundColor: '#fff',
     flex: 0.2,
     flexDirection: 'row',
     marginLeft: 20,
@@ -412,11 +491,9 @@ const styles = StyleSheet.create({
     flex: 0.02,
   },
   imageStyle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    alignSelf: 'flex-end',
-    marginRight: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 10,
   },
   seperator: {
     height: 1,
