@@ -8,14 +8,6 @@ import {
   FlatList,
 } from 'react-native';
 
-function Item({title}) {
-  return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
-}
-
 export default class Category extends React.Component {
   constructor(props) {
     super(props);
@@ -52,16 +44,17 @@ export default class Category extends React.Component {
       <SafeAreaView style={styles.container}>
         <FlatList
           data={this.state.dataSource}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <View style={styles.flatViewStyling}>
-                <Text style={{fontSize: 24, margin: 5}}>{item.userId}</Text>
+                <View style={styles.useridview}>
+                  <Text style={styles.userIdText}>{item.userId}</Text>
+                  <Text style={styles.itemIdText}>{item.id}</Text>
+                </View>
                 <View style={styles.itemStyling}>
-                  <Text style={{fontSize: 15}}>{item.id}</Text>
-                  <View>
-                    <Text style={styles.textStyling}>{item.title}</Text>
-                    <Text style={{fontSize: 15}}> Volume: {item.body}</Text>
-                  </View>
+                  <Text style={styles.textTitleStyling}>{item.title}</Text>
+                  <Text style={styles.itembodyText}> Volume: {item.body}</Text>
                 </View>
               </View>
             );
@@ -75,11 +68,14 @@ export default class Category extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey',
-
-    marginHorizontal: 16,
+    backgroundColor: '#f2f2f2',
+    marginHorizontal: 10,
   },
-  Activity:{
+  itembodyText: {fontSize: 15, marginBottom: 2, marginTop: 5},
+  itemIdText: {fontSize: 28, textAlign: 'center', marginTop: 20},
+  userIdText: {fontSize: 15, margin: 5},
+  useridview: {flex: 0.2, backgroundColor: '#a4d5f6'},
+  Activity: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -87,18 +83,21 @@ const styles = StyleSheet.create({
   },
 
   flatViewStyling: {
-    backgroundColor: 'cyan',
+    backgroundColor: '#b8c198',
     margin: 6,
     borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 
   itemStyling: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flex: 0.8,
     margin: 5,
   },
 
-  textStyling: {
-    fontSize: 15,
+  textTitleStyling: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'justify',
   },
 });
