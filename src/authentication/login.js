@@ -9,22 +9,26 @@ import {
   Alert,
 } from 'react-native';
 
-class Home extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: null,
       password: null,
-      authData: [],
+      headerTag: ' ',
     };
   }
+  splitString(headerTag) {
+    var temp = headerTag.split(' ');
+    this.state.headerTag = temp[1];
+  }
   signINcheck() {
-    const {authData, username, password} = this.state;
+    const {username, password} = this.state;
     const {navigation} = this.props;
 
     if (this.state) {
       fetch(
-        'https://admin-stage-temp.priskoll.occdev.axfood.se/axfood/axfood-security/login',
+        'https://admin-stage.priskoll.occdev.axfood.se/axfood/axfood-security/login',
         {
           method: 'POST',
           body: JSON.stringify({
@@ -32,21 +36,18 @@ class Home extends React.Component {
             password: password,
           }),
         },
-      )
-        .then(response => response.json())
-        .then(responseData => {
-          this.setState({
-            authData: responseData,
-          });
-          if (responseData.success == 'true') {
-            navigation.navigate('HomeScreen');
-          } else {
-            Alert.alert('wrong credentials');
-          }
-        });
+      ).then(response => {
+        this.splitString(response.headers.map.authorization);
+        console.log(this.state.headerTag);
+        if (!(response.status === 200)) {
+          Alert.alert('wrong credentials');
+        } else {
+          response.json();
+          navigation.navigate('HomeScreen', {headerTag: this.state.headerTag});
+        }
+      });
     }
   }
-
   onChangeText(input) {}
   render() {
     const {navigation} = this.props;
@@ -107,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Login;
